@@ -1,2 +1,4 @@
 .DS_Store
 
+# RecruitIn: prevent PII from entering git history
+plugins/recruitin-automation/workflows/current-state.md

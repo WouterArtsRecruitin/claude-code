@@ -28,5 +28,8 @@
     "communication-templates",
     "deal-recovery",
     "market-analysis"
+  ],
+  "hooks": [
+    "hooks/hooks.json"
   ]
 }

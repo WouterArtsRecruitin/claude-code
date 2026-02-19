@@ -4,46 +4,26 @@
       "command": "npx",
       "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
       "env": {
-        "PIPEDRIVE_API_TOKEN": "${PIPEDRIVE_API_TOKEN}",
-        "PIPEDRIVE_DOMAIN": "${PIPEDRIVE_DOMAIN:-api.pipedrive.com}"
+        "PIPEDRIVE_API_TOKEN": "",
+        "PIPEDRIVE_DOMAIN": ""
       },
-      "description": "Pipedrive CRM integration — deals, contacts, activities, pipeline stages. Set PIPEDRIVE_API_TOKEN env var before use.",
-      "endpoints": {
-        "deals": "/v1/deals",
-        "persons": "/v1/persons",
-        "organizations": "/v1/organizations",
-        "activities": "/v1/activities",
-        "pipelines": "/v1/pipelines",
-        "stages": "/v1/stages",
-        "dealFields": "/v1/dealFields"
-      }
+      "description": "PLACEHOLDER — @anthropic-ai/mcp-server-fetch is a generic HTTP fetch server. It does NOT natively understand the Pipedrive API. To use live Pipedrive data, either: (1) Build a custom MCP server wrapping the Pipedrive REST API, or (2) Use the fetch server manually with full Pipedrive URLs. Without a custom server, commands fall back to template mode (manual data input). Set PIPEDRIVE_API_TOKEN and PIPEDRIVE_DOMAIN env vars before use."
     },
     "zapier": {
       "command": "npx",
       "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
       "env": {
-        "ZAPIER_WEBHOOK_BASE": "${ZAPIER_WEBHOOK_BASE}"
+        "ZAPIER_WEBHOOK_BASE": ""
       },
-      "description": "Zapier webhook integration — trigger zaps, send payloads. Set ZAPIER_WEBHOOK_BASE env var before use.",
-      "webhooks": {
-        "new_lead": "/hooks/catch/new-lead",
-        "deal_stage_change": "/hooks/catch/deal-stage-change",
-        "deal_at_risk": "/hooks/catch/deal-at-risk",
-        "content_approved": "/hooks/catch/content-approved"
-      }
+      "description": "PLACEHOLDER — @anthropic-ai/mcp-server-fetch is a generic HTTP fetch server. To trigger Zapier webhooks, use the fetch tool with full webhook URLs (e.g., https://hooks.zapier.com/hooks/catch/YOUR_ID/YOUR_HOOK). Without configured webhooks, automation chains operate in manual mode. Set ZAPIER_WEBHOOK_BASE env var before use."
     },
     "jotform": {
       "command": "npx",
       "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
       "env": {
-        "JOTFORM_API_KEY": "${JOTFORM_API_KEY}"
+        "JOTFORM_API_KEY": ""
       },
-      "description": "Jotform integration — intake forms, feedback forms, submissions. Set JOTFORM_API_KEY env var before use.",
-      "endpoints": {
-        "forms": "/user/forms",
-        "submissions": "/form/{formId}/submissions"
-      }
+      "description": "PLACEHOLDER — @anthropic-ai/mcp-server-fetch is a generic HTTP fetch server. To access Jotform data, use the fetch tool with full Jotform API URLs (e.g., https://api.jotform.com/user/forms?apiKey=YOUR_KEY). Without a custom server, form data must be provided manually. Set JOTFORM_API_KEY env var before use."
     }
-  },
-  "setup_instructions": "To enable live integrations, set these environment variables:\n  export PIPEDRIVE_API_TOKEN='your-pipedrive-api-token'\n  export PIPEDRIVE_DOMAIN='yourcompany.pipedrive.com'\n  export ZAPIER_WEBHOOK_BASE='https://hooks.zapier.com/hooks/catch/YOUR_ID'\n  export JOTFORM_API_KEY='your-jotform-api-key'\n\nWithout these, commands will operate in template mode (manual data input)."
+  }
 }

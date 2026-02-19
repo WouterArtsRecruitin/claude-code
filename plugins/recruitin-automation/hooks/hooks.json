@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "You are initializing a RecruitIn recruitment operations session. Read the file plugins/recruitin-automation/workflows/current-state.md to check the last pipeline update timestamp. If the data is older than 24 hours, warn the user: '[STALE DATA] Pipeline data is [X] uur oud. Run /daily-ops voor een update.' Then display the available commands summary in Dutch:\n\nRecruitIn AI geladen.\n\nBeschikbare commando's:\n  /daily-ops          — Dagelijks overzicht\n  /deal-rescue        — Deals redden\n  /lead-score         — Leads scoren\n  /content-create     — Content maken\n  /pipeline-report    — Pipeline analyse\n  /integration-check  — Integraties checken\n  /strategic-planning — Strategische planning\n  /crisis             — Crisis response\n\nIf .mcp.json is configured but env vars (PIPEDRIVE_API_TOKEN, ZAPIER_WEBHOOK_BASE, JOTFORM_API_KEY) are empty, warn: '[SETUP NEEDED] MCP integraties geconfigureerd maar API keys ontbreken.'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check if the file that was just written or edited is plugins/recruitin-automation/workflows/current-state.md. If YES, perform these checks on the updated content:\n\n1. REGRESSION: If any deal moved to a lower stage number than before, output: '[REGRESSION ALERT] Deal [name] moved from Stage [X] to Stage [Y]. Reason needed. Consider running /deal-rescue.'\n\n2. SLA BREACH: Check deal durations against SLA limits (S1>5d, S2>10d, S3>14d, S4>7d, S5>5d). If breached: '[SLA BREACH] Deal [name] has been in Stage [X] for [Y] days (SLA: [Z] days). Recommended: run /deal-rescue [deal_name]'\n\n3. NO ACTIVITY: If a deal has no activity logged in >3 business days: '[ACTIVITY NEEDED] Deal [name] — no activity for [X] days.'\n\n4. WIN/LOSS: If a deal moved to Closed Won or Closed Lost, output the appropriate tracking message.\n\nIf the file is NOT current-state.md, do nothing (return empty response).",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

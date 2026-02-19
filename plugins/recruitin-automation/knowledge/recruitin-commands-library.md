@@ -1,4 +1,4 @@
-# RecruitIn Commands Library v1.0.0
+# RecruitIn Commands Library v1.1.0
 
 ## Quick Reference
 
@@ -10,6 +10,8 @@
 | `/content-create` | Generate content | this_week | Draft first |
 | `/pipeline-report` | Pipeline analysis | this_week | Yes |
 | `/integration-check` | Integration health | asap | Yes |
+| `/strategic-planning` | Quarterly strategy | strategic | Draft first |
+| `/crisis` | Emergency response | asap | Approval required |
 
 ## Command Details
 
@@ -49,6 +51,18 @@
 **Output:** Health status report with fixes
 **Skills activated:** pipeline_management
 
+### /strategic-planning [focus_area]
+**What it does:** Generates quarterly strategic analysis — market positioning, resource allocation, growth opportunities.
+**Optional focus:** `market`, `revenue`, `team`, `clients`, `growth`
+**Output:** Internal strategic report requiring review
+**Skills activated:** market_analysis, pipeline_management, lead_scoring
+
+### /crisis [situation_description]
+**What it does:** Emergency crisis response — impact analysis, action plan, communication drafts.
+**Input:** Description of the crisis (hiring freeze, competitor threat, key client loss, market disruption, internal crisis)
+**Output:** Crisis response plan with immediate + 7-day actions. ALWAYS requires explicit approval before any action.
+**Skills activated:** deal_recovery, pipeline_management, communication_templates, market_analysis
+
 ## Command Chaining Examples
 
 ```
@@ -59,7 +73,10 @@
 /pipeline-report weekly → /lead-score (new leads) → /content-create linkedin
 
 # Crisis response
-/integration-check → /pipeline-report → /deal-rescue
+/crisis → /deal-rescue → /pipeline-report
+
+# Strategic review
+/pipeline-report quarterly → /strategic-planning → /content-create linkedin
 
 # Content sprint
 /content-create linkedin → /content-create email-campaign → /content-create newsletter
@@ -69,4 +86,4 @@
 - Deprecated commands marked with `[DEPRECATED v1.x.x]`
 - Deprecated commands remain functional for 2 versions
 - Replacement command always documented
-- Currently deprecated: none (v1.0.0)
+- Currently deprecated: none (v1.1.0)

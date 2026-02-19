@@ -112,13 +112,17 @@ Add to your `~/.bashrc` or `~/.zshrc`:
 ```bash
 # RecruitIn Quick Commands
 alias ri='claude'
-alias ri-daily='claude --print "/daily-ops"'
-alias ri-pipeline='claude --print "/pipeline-report weekly"'
-alias ri-rescue='claude --print "/deal-rescue"'
+alias ri-daily='claude -p "/daily-ops"'
+alias ri-pipeline='claude -p "/pipeline-report weekly"'
+alias ri-rescue='claude -p "/deal-rescue"'
 alias ri-score='claude "/lead-score"'
 alias ri-content='claude "/content-create"'
 alias ri-crisis='claude "/crisis"'
 ```
+
+> **Security note:** Do NOT store API tokens (PIPEDRIVE_API_TOKEN, etc.) directly in
+> shell rc files. Use a secrets manager, `.env` file (excluded from version control),
+> or `direnv` with a `.envrc` that is gitignored.
 
 Usage:
 ```bash
@@ -150,12 +154,15 @@ fi
 
 ### Daily Morning Brief (auto-generate)
 ```bash
+# Create a private output directory (run once)
+mkdir -p "$HOME/.recruitin/reports" && chmod 700 "$HOME/.recruitin/reports"
+
 # Add to crontab: crontab -e
 # Run daily-ops at 8:00 AM on weekdays
-0 8 * * 1-5 cd /path/to/project && claude --print "/daily-ops" > /tmp/recruitin-daily-$(date +\%Y\%m\%d).md 2>&1
+0 8 * * 1-5 cd /path/to/project && claude -p "/daily-ops" > "$HOME/.recruitin/reports/daily-$(date +\%Y\%m\%d).md" 2>&1
 
 # Weekly pipeline report on Fridays at 4 PM
-0 16 * * 5 cd /path/to/project && claude --print "/pipeline-report weekly" > /tmp/recruitin-weekly-$(date +\%Y\%m\%d).md 2>&1
+0 16 * * 5 cd /path/to/project && claude -p "/pipeline-report weekly" > "$HOME/.recruitin/reports/weekly-$(date +\%Y\%m\%d).md" 2>&1
 ```
 
 ---
@@ -197,21 +204,27 @@ fi
 │  └───────────────────────────────────┘  │
 │                                         │
 │  Token Budget: ~2000 input / execution  │
-│  State: Git-tracked (audit trail)       │
+│  State: Local file (gitignored for GDPR) │
 │  MCP: Optional (template mode fallback) │
 └─────────────────────────────────────────┘
 ```
 
 ## ENVIRONMENT VARIABLES
 
-```bash
-# Required for MCP integrations (optional — works without)
-export PIPEDRIVE_API_TOKEN='pd-xxx'
-export PIPEDRIVE_DOMAIN='recruitin.pipedrive.com'
-export ZAPIER_WEBHOOK_BASE='https://hooks.zapier.com/hooks/catch/XXX'
-export JOTFORM_API_KEY='jf-xxx'
+Use a `.env` file (gitignored) or a secrets manager — do NOT hardcode tokens in shell profiles.
 
-# Optional: Claude Code configuration
+```bash
+# .env file (add to .gitignore!)
+PIPEDRIVE_API_TOKEN='your-pipedrive-api-token'
+PIPEDRIVE_DOMAIN='yourcompany.pipedrive.com'
+ZAPIER_WEBHOOK_BASE='https://hooks.zapier.com/hooks/catch/YOUR_ID'
+JOTFORM_API_KEY='your-jotform-api-key'
+
+# Load with direnv (.envrc) or: set -a; source .env; set +a
+```
+
+```bash
+# Optional: Claude Code model configuration
 export CLAUDE_MODEL='claude-sonnet-4-5-20250929'  # Default model for speed
 # Use claude-opus-4-6 for strategic planning and deep analysis
 ```
@@ -228,7 +241,7 @@ cd /path/to/your/recruitin-project
 # 3. Ensure CLAUDE.md exists with RecruitIn context (see Method 1)
 
 # 4. Set environment variables (optional, for MCP)
-export PIPEDRIVE_API_TOKEN='your-token'
+# Use .env file + direnv, or a secrets manager (see ENVIRONMENT VARIABLES section)
 
 # 5. Start Claude Code
 claude
