@@ -1,0 +1,27 @@
+{
+  "name": "recruitin-automation",
+  "version": "1.0.0",
+  "description": "RecruitIn recruitment automation system — universal meta-prompt engine with pipeline management, lead scoring, deal rescue, content creation, and integration orchestration for Pipedrive, Zapier, and Jotform.",
+  "author": "WouterArtsRecruitin",
+  "category": "productivity",
+  "commands": [
+    "daily-ops",
+    "deal-rescue",
+    "lead-score",
+    "content-create",
+    "pipeline-report",
+    "integration-check"
+  ],
+  "agents": [
+    "recruitment-orchestrator",
+    "pipeline-analyst",
+    "content-strategist"
+  ],
+  "skills": [
+    "lead-scoring",
+    "pipeline-management",
+    "communication-templates",
+    "deal-recovery",
+    "market-analysis"
+  ]
+}

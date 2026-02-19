@@ -145,6 +145,16 @@
       },
       "source": "./plugins/security-guidance",
       "category": "security"
+    },
+    {
+      "name": "recruitin-automation",
+      "description": "Universal recruitment automation system for RecruitIn — meta-prompt engine with pipeline management, lead scoring, deal rescue, content creation, and integration orchestration",
+      "version": "1.0.0",
+      "author": {
+        "name": "WouterArtsRecruitin"
+      },
+      "source": "./plugins/recruitin-automation",
+      "category": "productivity"
     }
   ]
 }
