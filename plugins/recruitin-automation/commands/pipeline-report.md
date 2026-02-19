@@ -1,41 +1,35 @@
-# /pipeline-report — Pipeline Analysis Command
+---
+description: Comprehensive pipeline analysis with forecasting and trend detection
+argument-hint: "Period: weekly (default), monthly, quarterly"
+---
 
-Generate comprehensive pipeline analysis with forecasting.
+# Pipeline Report
 
-## Trigger
-`/pipeline-report` or `/pipeline-report [period]` where period is:
-- `weekly` (default)
-- `monthly`
-- `quarterly`
+You are generating a pipeline analysis report for RecruitIn. Provide metrics, forecasting, and actionable insights.
 
-## Variables (auto-set)
-```
-{{OPERATION_TYPE}} = "pipeline_report"
-{{URGENCY}} = "this_week"
-{{OUTPUT_AUDIENCE}} = "internal"
-{{INTEGRATION_TARGET}} = "pipedrive"
-```
+## Context
 
-## Analysis Framework
+- Current state: `plugins/recruitin-automation/workflows/current-state.md`
+- Pipeline definitions: `plugins/recruitin-automation/knowledge/pipeline-stages.md`
+- Pipeline management: `plugins/recruitin-automation/skills/pipeline-management.md`
+- Market context: `plugins/recruitin-automation/skills/market-analysis.md`
 
-### Pipeline Health Metrics
-1. **Velocity:** Average days per stage transition
-2. **Conversion:** % deals moving forward per stage
-3. **Volume:** Total deals and value per stage
-4. **Aging:** Deals exceeding stage SLA
-5. **Win Rate:** Closed-won vs total closed
-6. **Revenue Forecast:** Weighted pipeline (value * probability per stage)
+## Variables
+- OPERATION_TYPE: pipeline_report
+- URGENCY: this_week
+- OUTPUT_AUDIENCE: internal
+- INTEGRATION_TARGET: pipedrive
 
-### Stage Probability Weights
+## Stage Probability Weights
 | Stage | Probability | SLA (days) |
 |-------|------------|------------|
-| Stage 1 — Qualification | 10% | 5 |
-| Stage 2 — Engagement | 25% | 10 |
-| Stage 3 — Proposal/Interview | 50% | 14 |
-| Stage 4 — Negotiation | 75% | 7 |
-| Stage 5 — Closing | 90% | 5 |
+| S1 — Qualification | 10% | 5 |
+| S2 — Engagement | 25% | 10 |
+| S3 — Proposal/Interview | 50% | 14 |
+| S4 — Negotiation | 75% | 7 |
+| S5 — Closing | 90% | 5 |
 
-### Forecasting Model
+## Forecasting Model
 - **Conservative:** Sum of (value * probability) for Stage 3+
 - **Expected:** Sum of (value * probability) for all stages
 - **Optimistic:** Sum of (value * probability * 1.2) for all stages
@@ -65,17 +59,17 @@ Generate comprehensive pipeline analysis with forecasting.
 | Optimistic | €X | €X |
 
 ### Conversion Funnel
-S1 → S2: X% | S2 → S3: X% | S3 → S4: X% | S4 → S5: X% | S5 → Won: X%
+S1→S2: X% | S2→S3: X% | S3→S4: X% | S4→S5: X% | S5→Won: X%
 
 ### Attention Required
 1. [Deal/Issue] — [Why] — [Recommended action]
-2. ...
 
 ### Wins This Period
 - [Deal] — €[Value] — [Notable detail]
 
 ### Trends
-- [Trend observation 1]
-- [Trend observation 2]
+- [Trend 1]
 - [Comparison to previous period]
 ```
+
+After generating: update `plugins/recruitin-automation/workflows/current-state.md` with latest pipeline snapshot.

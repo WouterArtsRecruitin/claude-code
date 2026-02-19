@@ -1,65 +1,62 @@
-# /content-create — Content Creation Command
+---
+description: Generate recruitment content for LinkedIn, email, case studies, job posts, or newsletters
+argument-hint: "Content type: linkedin, email-campaign, case-study, job-post, newsletter"
+---
 
-Generate recruitment-focused content for various channels.
+# Content Creation
 
-## Trigger
-`/content-create [content_type]` where content_type is:
-- `linkedin` — LinkedIn post
-- `email-campaign` — Email sequence
-- `case-study` — Client case study
-- `job-post` — Job advertisement
-- `newsletter` — Recruitment newsletter
+You are creating recruitment-focused content for RecruitIn. Generate professional, on-brand content with A/B variants.
 
-## Variables (auto-set)
-```
-{{OPERATION_TYPE}} = "content_creation"
-{{URGENCY}} = "this_week"
-{{OUTPUT_AUDIENCE}} = "public"
-{{INTEGRATION_TARGET}} = [derived from content_type]
-```
+## Context
 
-## Content Guidelines
+- Brand voice: `plugins/recruitin-automation/agents/content-strategist.md`
+- Communication templates: `plugins/recruitin-automation/skills/communication-templates.md`
+- Market context: `plugins/recruitin-automation/skills/market-analysis.md`
+- Compliance: `plugins/recruitin-automation/knowledge/compliance-gdpr.md`
 
-### Brand Voice — RecruitIn
-- **Tone:** Professional but approachable. Dutch directness with warmth.
-- **Language:** Dutch (primary) or English (when specified). Never mix.
-- **Values:** Expertise, transparency, results-driven, personal connection.
-- **Avoid:** Jargon overload, buzzwords without substance, aggressive selling.
+## Variables
+- OPERATION_TYPE: content_creation
+- URGENCY: this_week
+- OUTPUT_AUDIENCE: public
+- INTEGRATION_TARGET: derived from content_type argument
+
+## Content Types
 
 ### LinkedIn Posts
 - Hook in first line (pattern interrupt or bold statement)
-- Max 1300 characters (optimal engagement length)
+- Max 1300 characters (optimal engagement)
 - Personal angle or real case (anonymized)
-- Single clear CTA
-- 3-5 relevant hashtags
-- Line breaks for readability
+- Single clear CTA, 3-5 hashtags, line breaks for readability
 
 ### Email Campaigns
-- Subject line: <50 characters, personalized, curiosity-driven
-- Preview text: complements subject, not repeats
+- Subject: <50 chars, personalized, curiosity-driven
 - Body: Problem → Agitate → Solution → CTA
-- Max 200 words per email
-- Plain text preferred (higher deliverability)
+- Max 200 words, plain text preferred
 
 ### Case Studies
 - Structure: Challenge → Approach → Result → Testimonial
-- Include concrete numbers (time-to-hire, cost savings, candidate quality)
-- Client approval reminder before publication
-- Anonymization option for sensitive placements
+- Concrete numbers, client approval reminder, anonymization option
 
 ### Job Posts
-- Title: clear role + seniority + location
+- Title: role + seniority + location
 - Lead with "what you'll do" not "who we are"
-- Requirements: must-have vs nice-to-have clearly separated
-- Salary range (transparency = more applicants)
-- Application process explained
+- Must-have vs nice-to-have separated, salary range included
+
+### Newsletters
+- Structure: Market update → Featured roles → Tip/insight → CTA
+- Max 500 words, scannable headers/bullets, one primary CTA
+
+## Brand Voice — RecruitIn
+- **Tone:** Professional but approachable. Dutch directness with warmth.
+- **Language:** Dutch (default) or English (when specified). Never mix.
+- **Values:** Expertise, transparency, results-driven, personal connection.
+- **Avoid:** Jargon overload, buzzwords, aggressive selling.
 
 ## Output Format
 ```markdown
 ## Content Draft — [TYPE] — [DATE]
 
 ### [Title/Subject]
-
 [Content body]
 
 ### Metadata
@@ -78,3 +75,6 @@ Generate recruitment-focused content for various channels.
 - [Compliance checks needed]
 - [Approval required from: X]
 ```
+
+## Approval
+Content drafts require review before publication. Approve with "publish" or request edits.

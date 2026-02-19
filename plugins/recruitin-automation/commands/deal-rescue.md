@@ -1,18 +1,25 @@
-# /deal-rescue — Deal Recovery Command
+---
+description: Analyze at-risk deals and generate recovery strategies with ready-to-send messages
+argument-hint: Optional deal name or Pipedrive deal ID
+---
 
-Analyze at-risk deals and generate recovery strategies.
+# Deal Rescue
 
-## Trigger
-`/deal-rescue` or `/deal-rescue [deal_name_or_id]`
+You are analyzing at-risk recruitment deals for RecruitIn. Diagnose stalled deals and generate actionable recovery plans.
 
-## Variables (auto-set)
-```
-{{OPERATION_TYPE}} = "deal_rescue"
-{{URGENCY}} = "asap"
-{{OUTPUT_AUDIENCE}} = "internal"
-{{INTEGRATION_TARGET}} = "pipedrive"
-{{RISK_LEVEL}} = "high"
-```
+## Context
+
+- Current pipeline state: Read from `plugins/recruitin-automation/workflows/current-state.md` or request from user
+- Recovery playbooks: `plugins/recruitin-automation/skills/deal-recovery.md`
+- Communication templates: `plugins/recruitin-automation/skills/communication-templates.md`
+- Pipeline reference: `plugins/recruitin-automation/knowledge/pipeline-stages.md`
+
+## Variables
+- OPERATION_TYPE: deal_rescue
+- URGENCY: asap
+- OUTPUT_AUDIENCE: internal
+- INTEGRATION_TARGET: pipedrive
+- RISK_LEVEL: high
 
 ## Execution Flow
 
@@ -72,3 +79,6 @@ Analyze at-risk deals and generate recovery strategies.
 - Recoverable (estimated): [X] deals | €[Y]
 - Recommended abandons: [X] deals | €[Y]
 ```
+
+## Approval
+This command outputs a DRAFT. Review recovery plans before executing. Confirm actions with "approve" or modify individual plans.

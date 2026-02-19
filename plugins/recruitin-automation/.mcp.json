@@ -1,0 +1,49 @@
+{
+  "mcpServers": {
+    "pipedrive": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
+      "env": {
+        "PIPEDRIVE_API_TOKEN": "${PIPEDRIVE_API_TOKEN}",
+        "PIPEDRIVE_DOMAIN": "${PIPEDRIVE_DOMAIN:-api.pipedrive.com}"
+      },
+      "description": "Pipedrive CRM integration — deals, contacts, activities, pipeline stages. Set PIPEDRIVE_API_TOKEN env var before use.",
+      "endpoints": {
+        "deals": "/v1/deals",
+        "persons": "/v1/persons",
+        "organizations": "/v1/organizations",
+        "activities": "/v1/activities",
+        "pipelines": "/v1/pipelines",
+        "stages": "/v1/stages",
+        "dealFields": "/v1/dealFields"
+      }
+    },
+    "zapier": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
+      "env": {
+        "ZAPIER_WEBHOOK_BASE": "${ZAPIER_WEBHOOK_BASE}"
+      },
+      "description": "Zapier webhook integration — trigger zaps, send payloads. Set ZAPIER_WEBHOOK_BASE env var before use.",
+      "webhooks": {
+        "new_lead": "/hooks/catch/new-lead",
+        "deal_stage_change": "/hooks/catch/deal-stage-change",
+        "deal_at_risk": "/hooks/catch/deal-at-risk",
+        "content_approved": "/hooks/catch/content-approved"
+      }
+    },
+    "jotform": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
+      "env": {
+        "JOTFORM_API_KEY": "${JOTFORM_API_KEY}"
+      },
+      "description": "Jotform integration — intake forms, feedback forms, submissions. Set JOTFORM_API_KEY env var before use.",
+      "endpoints": {
+        "forms": "/user/forms",
+        "submissions": "/form/{formId}/submissions"
+      }
+    }
+  },
+  "setup_instructions": "To enable live integrations, set these environment variables:\n  export PIPEDRIVE_API_TOKEN='your-pipedrive-api-token'\n  export PIPEDRIVE_DOMAIN='yourcompany.pipedrive.com'\n  export ZAPIER_WEBHOOK_BASE='https://hooks.zapier.com/hooks/catch/YOUR_ID'\n  export JOTFORM_API_KEY='your-jotform-api-key'\n\nWithout these, commands will operate in template mode (manual data input)."
+}

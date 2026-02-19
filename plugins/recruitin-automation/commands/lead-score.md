@@ -1,21 +1,27 @@
-# /lead-score — Lead Scoring Command
+---
+description: Score and prioritize client and candidate leads using recruitment-specific criteria
+argument-hint: Lead data (name, type, scoring factors)
+---
 
-Score and prioritize leads based on recruitment-specific criteria.
+# Lead Scoring
 
-## Trigger
-`/lead-score` or `/lead-score [lead_data]`
+You are scoring recruitment leads for RecruitIn using the CLS (Client Lead Score) and CALS (Candidate Lead Score) models.
 
-## Variables (auto-set)
-```
-{{OPERATION_TYPE}} = "lead_scoring"
-{{URGENCY}} = "this_week"
-{{OUTPUT_AUDIENCE}} = "internal"
-{{INTEGRATION_TARGET}} = "pipedrive"
-```
+## Context
 
-## Scoring Model
+- Scoring models: `plugins/recruitin-automation/skills/lead-scoring.md`
+- Market context: `plugins/recruitin-automation/skills/market-analysis.md`
+- Pipeline reference: `plugins/recruitin-automation/knowledge/pipeline-stages.md`
 
-### Client Lead Scoring (companies looking to hire)
+## Variables
+- OPERATION_TYPE: lead_scoring
+- URGENCY: this_week
+- OUTPUT_AUDIENCE: internal
+- INTEGRATION_TARGET: pipedrive
+
+## Scoring Models
+
+### Client Lead Scoring (CLS)
 | Factor | Weight | Scoring |
 |--------|--------|---------|
 | Company size | 20% | Enterprise(10) > Mid(7) > SMB(4) > Startup(2) |
@@ -25,7 +31,7 @@ Score and prioritize leads based on recruitment-specific criteria.
 | Relationship warmth | 15% | Existing client(10) > Referral(8) > Warm intro(5) > Cold(2) |
 | Market demand | 10% | High demand role(10) > Medium(6) > Low(3) |
 
-### Candidate Lead Scoring
+### Candidate Lead Scoring (CALS)
 | Factor | Weight | Scoring |
 |--------|--------|---------|
 | Availability | 25% | Immediately(10) > 1 month(7) > 3 months(4) > Passive(2) |
@@ -34,14 +40,14 @@ Score and prioritize leads based on recruitment-specific criteria.
 | Interview readiness | 15% | Ready now(10) > Needs prep(6) > Needs convincing(3) |
 | Cultural fit signals | 15% | Strong indicators(10) > Neutral(5) > Red flags(1) |
 
-### Score Interpretation
-| Score Range | Priority | Action |
-|------------|----------|--------|
-| 80-100 | HOT | Immediate personal contact, fast-track pipeline |
-| 60-79 | WARM | Schedule within 48h, standard pipeline |
-| 40-59 | NURTURE | Add to drip sequence, monthly check-in |
-| 20-39 | COLD | Low priority, quarterly review |
-| 0-19 | ARCHIVE | No action, archive with re-evaluation trigger |
+### Score to Action
+| Score | Priority | Action | Timeline |
+|-------|----------|--------|----------|
+| 80-100 | HOT | Personal outreach, fast-track | Today |
+| 60-79 | WARM | Schedule contact | Within 48h |
+| 40-59 | NURTURE | Add to drip sequence | Weekly check |
+| 20-39 | COLD | Low-touch monitoring | Monthly review |
+| 0-19 | ARCHIVE | No active pursuit | Quarterly re-eval |
 
 ## Output Format
 ```markdown
@@ -59,7 +65,10 @@ Score and prioritize leads based on recruitment-specific criteria.
 | Factor | Score | Notes |
 |--------|-------|-------|
 | [Factor] | [X]/10 | [Why] |
-| ... | ... | ... |
 
 **Recommended next step:** [Specific action]
 ```
+
+## Data Requirements
+- Minimum: name + type (client/candidate) + 2 scoring factors
+- If data insufficient: output partial score with "[INCOMPLETE — missing: X, Y]" flag

@@ -1,21 +1,24 @@
-# /integration-check — Integration Health Command
+---
+description: Verify integration health between Pipedrive, Zapier, Jotform, and other tools
+argument-hint: "Optional: pipedrive, zapier, jotform, email, slack, or all"
+---
 
-Verify and troubleshoot integrations between Pipedrive, Zapier, Jotform, and other tools.
+# Integration Health Check
 
-## Trigger
-`/integration-check` or `/integration-check [integration_name]`
+You are checking the health of RecruitIn's tool integrations. Verify connections, identify issues, and suggest fixes.
 
-## Variables (auto-set)
-```
-{{OPERATION_TYPE}} = "integration_check"
-{{URGENCY}} = "asap"
-{{OUTPUT_AUDIENCE}} = "internal"
-{{INTEGRATION_TARGET}} = [all or specified]
-```
+## Context
+
+- MCP config: `plugins/recruitin-automation/.mcp.json` for live API access
+- Pipeline reference: `plugins/recruitin-automation/knowledge/pipeline-stages.md`
+
+## Variables
+- OPERATION_TYPE: integration_check
+- URGENCY: asap
+- OUTPUT_AUDIENCE: internal
+- INTEGRATION_TARGET: all (or as specified)
 
 ## Integration Map
-
-### Core Integrations
 ```
 Jotform (intake) → Zapier (routing) → Pipedrive (CRM)
                                     → Email (notifications)
@@ -23,12 +26,12 @@ Jotform (intake) → Zapier (routing) → Pipedrive (CRM)
 
 Pipedrive (stage change) → Zapier (trigger) → Email (templates)
                                              → Slack (updates)
-                                             → Jotform (feedback forms)
+                                             → Jotform (feedback)
 
 LinkedIn (manual) → Pipedrive (log activity)
 ```
 
-### Health Check Points
+## Health Check Points
 For each integration, verify:
 1. **Connection:** Is the API connection active?
 2. **Last Sync:** When was data last transferred?
@@ -36,14 +39,14 @@ For each integration, verify:
 4. **Data Integrity:** Are fields mapping correctly?
 5. **Rate Limits:** Are we approaching API limits?
 
-### Common Issues & Fixes
+## Common Issues & Fixes
 | Issue | Symptom | Fix |
 |-------|---------|-----|
-| Zapier trigger missed | Deal changed but no email sent | Check Zap is ON, verify trigger conditions |
-| Jotform data incomplete | Missing fields in Pipedrive | Check field mapping, verify required fields |
-| Pipedrive sync lag | Old data showing | Check API rate limits, verify webhook status |
-| Email bounce | Templates not delivered | Check sender domain, verify DKIM/SPF |
-| Duplicate records | Same lead entered twice | Check dedup rules in Zapier filter |
+| Zapier trigger missed | Deal changed but no email | Check Zap ON, verify triggers |
+| Jotform incomplete | Missing Pipedrive fields | Check field mapping |
+| Pipedrive sync lag | Old data showing | Check rate limits, webhooks |
+| Email bounce | Not delivered | Check DKIM/SPF |
+| Duplicates | Same lead twice | Check Zapier dedup filter |
 
 ## Output Format
 ```markdown
@@ -59,15 +62,13 @@ For each integration, verify:
 | Slack      | OK/WARN/ERROR | [time] | [count] |
 
 ### Issues Found
-1. **[SEVERITY]** [Integration] — [Issue description]
-   - **Impact:** [What's affected]
-   - **Fix:** [Step-by-step resolution]
-   - **Prevention:** [How to avoid recurrence]
+1. **[SEVERITY]** [Integration] — [Issue]
+   - **Impact:** [affected]
+   - **Fix:** [steps]
+   - **Prevention:** [avoid recurrence]
 
-### Recommendations
-- [Optimization suggestion 1]
-- [Optimization suggestion 2]
-
-### No Issues?
-If all integrations healthy: "All integrations operational. Next scheduled check: [date]."
+### All Clear?
+"All integrations operational. Next check: [date]."
 ```
+
+Note: With MCP configured (`.mcp.json`), this performs live API checks. Without MCP, generates a manual check template.

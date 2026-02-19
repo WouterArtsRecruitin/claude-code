@@ -1,17 +1,23 @@
-# /daily-ops — Daily Operations Command
+---
+description: Daily recruitment operations check — pipeline status, priorities, follow-ups, metrics
+argument-hint: Optional focus area (candidates, clients, deals, metrics)
+---
 
-Run daily recruitment operations check: pipeline status, priority actions, follow-ups.
+# Daily Operations
 
-## Trigger
-`/daily-ops` or `/daily-ops [focus_area]`
+You are running the daily operations check for RecruitIn recruitment agency. Follow this systematic approach to generate a morning briefing.
 
-## Variables (auto-set)
-```
-{{OPERATION_TYPE}} = "daily_routine"
-{{URGENCY}} = "this_week"
-{{OUTPUT_AUDIENCE}} = "internal"
-{{INTEGRATION_TARGET}} = "pipedrive"
-```
+## Context
+
+- Current pipeline state: Read from `plugins/recruitin-automation/workflows/current-state.md` or request from user
+- Reference: `plugins/recruitin-automation/knowledge/pipeline-stages.md` for stage definitions
+- Skills: lead_scoring, pipeline_management, communication_templates
+
+## Variables
+- OPERATION_TYPE: daily_routine
+- URGENCY: this_week
+- OUTPUT_AUDIENCE: internal
+- INTEGRATION_TARGET: pipedrive
 
 ## Execution Flow
 
